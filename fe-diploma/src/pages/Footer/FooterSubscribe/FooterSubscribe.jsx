@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { socials } from "#utils/socials";
 import ValidationEmail from "#services/ValidationEmail";
 import Modal from "#components/Modal/Modal";
 import "./FooterSubscribe.css";
 
-function FooterSubscribe() {
+const FooterSubscribe = ({ apiUrl, modalInfoMessages }) => {
     const [value, setValue] = useState("");
     const [valid, setValid] = useState(false);
     const [modal, setModal] = useState("none");
-    const [status, setStatus] = useState(""); 
+    const [status, setStatus] = useState("");
+
     const handleEmail = (e) => {
         e.preventDefault();
         const isValid = ValidationEmail(e.target.value);
@@ -31,15 +33,15 @@ function FooterSubscribe() {
 
     const modalInfo = (value) => {
         return value && value === "info"
-            ? <Modal status={"info"} display={modal} text={"Вы успешно подписались на рассылку"} onChange={handleModal} />
-            : <Modal status={"error"} display={modal} text={"Ошибка! Сервер недоступен. Пожалуйста, попробуйте позже"} onChange={handleModal} />;
+            ? <Modal status={"info"} display={modal} text={modalInfoMessages.success} onChange={handleModal} />
+            : <Modal status={"error"} display={modal} text={modalInfoMessages.error} onChange={handleModal} />;
     };
 
     useEffect(() => {
         if (!valid) return;
 
         setStatus("");
-        fetch("https://students.netoservices.ru/fe-diplom/subscribe", {
+        fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: value }),
@@ -55,7 +57,7 @@ function FooterSubscribe() {
             });
 
         setValid(false);
-    }, [valid, value]);
+    }, [valid, value, apiUrl]);
 
     return (
         <div className="footer-subscribe subscribe">
@@ -94,7 +96,17 @@ function FooterSubscribe() {
                     })}
                 </ul>
             </div>
-            {modalInfo(status)} {}
+            {modalInfo(status)}
         </div>
     );
-}
+};
+
+FooterSubscribe.propTypes = {
+    apiUrl: PropTypes.string.isRequired,
+    modalInfoMessages: PropTypes.shape({
+        success: PropTypes.string.isRequired,
+        error: PropTypes.string.isRequired,
+    }).isRequired,
+};
+
+export default FooterSubscribe;

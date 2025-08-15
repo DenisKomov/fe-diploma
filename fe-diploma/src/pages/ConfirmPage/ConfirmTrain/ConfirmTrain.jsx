@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types"; // Импортируем PropTypes
 import RouteContext from "#context/routeContext";
 import SVGicon from "#components/SVGicon/SVGicon";
 import "./ConfirmTrain.css";
@@ -14,6 +15,14 @@ const TrainInfo = ({ train }) => (
     </>
 );
 
+TrainInfo.propTypes = {
+    train: PropTypes.shape({
+        train_name: PropTypes.string.isRequired,
+        from_city: PropTypes.string.isRequired,
+        to_city: PropTypes.string.isRequired,
+    }).isRequired,
+};
+
 // Компонент для отображения времени
 const TimeInfo = ({ time, city }) => (
     <div>
@@ -22,6 +31,17 @@ const TimeInfo = ({ time, city }) => (
         <p>{city.station}</p>
     </div>
 );
+
+TimeInfo.propTypes = {
+    time: PropTypes.shape({
+        dateTime: PropTypes.string.isRequired,
+        datetime: PropTypes.string.isRequired,
+    }).isRequired,
+    city: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        station: PropTypes.string.isRequired,
+    }).isRequired,
+};
 
 // Компонент для отображения информации о поездке
 const TripInfo = ({ route }) => (
@@ -47,6 +67,27 @@ const TripInfo = ({ route }) => (
         }
     </div>
 );
+
+TripInfo.propTypes = {
+    route: PropTypes.shape({
+        departure_id: PropTypes.string.isRequired,
+        departure_from_datetime: PropTypes.string.isRequired,
+        departure_from_city_name: PropTypes.string.isRequired,
+        departure_from_railway_station_name: PropTypes.string.isRequired,
+        departure_to_datetime: PropTypes.string.isRequired,
+        departure_to_city_name: PropTypes.string.isRequired,
+        departure_to_railway_station_name: PropTypes.string.isRequired,
+        arrival_id: PropTypes.string,
+        arrival_from_datetime: PropTypes.string,
+        arrival_from_city_name: PropTypes.string,
+        arrival_from_railway_station_name: PropTypes.string,
+        arrival_to_datetime: PropTypes.string,
+        arrival_to_city_name: PropTypes.string,
+        arrival_to_railway_station_name: PropTypes.string,
+        departure_duration: PropTypes.string.isRequired,
+        arrival_duration: PropTypes.string,
+    }).isRequired,
+};
 
 // Компонент для отображения цены
 const PriceInfo = () => (

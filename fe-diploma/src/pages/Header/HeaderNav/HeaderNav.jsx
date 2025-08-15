@@ -1,12 +1,13 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 import { HashLink } from "react-router-hash-link";
 import "./HeaderNav.css";
 
-function HeaderNav() {
+function HeaderNav({ title }) {
     return (
         <div className="header-nav">
             <div className="container">
+                <h1>{title}</h1> {}
                 <nav className="header-nav__nav nav">
                     <ul className="nav__list">
                         <li className="nav__item">
@@ -51,5 +52,13 @@ function HeaderNav() {
         </div>
     );
 }
+
+HeaderNav.propTypes = {
+    title: PropTypes.string,
+};
+
+HeaderNav.defaultProps = {
+    title: "Главное меню",
+};
 
 export default HeaderNav;
