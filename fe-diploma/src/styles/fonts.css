@@ -3,5 +3,5 @@
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    src: url('./roboto-v30-latin-regular.woff2') format('woff2');
+    src: url('./src/styles/roboto-v30-latin-regular.woff2') format('woff2');
 }
