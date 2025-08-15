@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import FooterContact from "./FooterContact/FooterContact";
 import FooterSubscribe from "./FooterSubscribe/FooterSubscribe";
 import FooterCopyright from "./FooterCopyright/FooterCopyright";
@@ -18,8 +17,5 @@ function Footer() {
     );
 }
 
-Footer.propTypes = {
-
-};
 
 export default Footer;

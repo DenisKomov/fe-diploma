@@ -7,7 +7,10 @@ import "./Calendar.css";
 function Calendar({ name, placeholder, onChange }) {
     const $input = useRef();
     const element = useRef();
-    const [dates, setDates] = useState({});
+    const [dates, setDates] = useState({
+        date_start: "", // Добавляем значение по умолчанию
+        date_end: "",   // Также добавляем это значение
+    });
 
     useEffect(() => {
         element.current = new AirDatepicker($input.current, {
@@ -28,21 +31,21 @@ function Calendar({ name, placeholder, onChange }) {
 
                 setDates((prev) => ({
                     ...prev,
-                    [name]: updatedDate,
+                    date_start: updatedDate,
                 }));
 
-                onChange({ date_start: dates.date_start, date_end: dates.date_end });
+                onChange({ date_start: updatedDate, date_end: dates.date_end });
             }
         });
 
         return () => {
             element.current.destroy();
         };
-    }, [name, onChange]);
+    }, [name, onChange, dates.date_end]);
 
     useEffect(() => {
         element.current.update({});
-    }, [dates]);
+    }, [dates.date_start, dates.date_end]);
 
     return (
         <input
